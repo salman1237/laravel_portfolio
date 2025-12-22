@@ -10,238 +10,271 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'DejaVu Sans', Arial, sans-serif;
-            font-size: 11px;
-            line-height: 1.5;
-            color: #333;
+            font-family: 'DejaVu Serif', 'Times New Roman', serif;
+            font-size: 10.5pt;
+            line-height: 1.2;
+            color: #000;
+            padding: 36pt 50pt 36pt 50pt;
         }
-        .container {
-            padding: 20px;
+        .header {
+            text-align: center;
+            margin-bottom: 15pt;
         }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #1a202c;
-        }
-        h2 {
-            font-size: 16px;
-            margin-top: 15px;
-            margin-bottom: 8px;
-            color: #2d3748;
-            border-bottom: 2px solid #4a5568;
-            padding-bottom: 3px;
-        }
-        h3 {
-            font-size: 13px;
-            margin-top: 8px;
-            margin-bottom: 4px;
-            color: #2d3748;
+        .header h1 {
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 8pt;
         }
         .contact-info {
-            margin-bottom: 15px;
-            font-size: 10px;
-            color: #4a5568;
+            font-size: 9.5pt;
+            line-height: 1.5;
         }
-        .contact-info span {
-            margin-right: 15px;
+        .contact-info a {
+            color: #0066cc;
+            text-decoration: none;
         }
-        .section {
-            margin-bottom: 12px;
+        .section-title {
+            font-size: 11pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 14pt;
+            margin-bottom: 5pt;
+            border-bottom: 1pt solid #000;
+            padding-bottom: 2pt;
         }
-        .skill-category {
-            margin-bottom: 6px;
+        .entry {
+            margin-bottom: 10pt;
         }
-        .skill-category strong {
-            display: inline-block;
-            width: 180px;
+        .entry-header {
+            display: table;
+            width: 100%;
+            margin-bottom: 2pt;
         }
-        .project, .competition, .education, .experience {
-            margin-bottom: 10px;
+        .entry-left {
+            display: table-cell;
+            font-weight: bold;
+            width: 68%;
         }
-        .project h3, .competition h3, .education h3, .experience h3 {
-            font-size: 12px;
-            margin-bottom: 2px;
+        .entry-right {
+            display: table-cell;
+            text-align: right;
+            width: 32%;
+            font-size: 9.5pt;
+            padding-right: 0;
         }
-        .meta {
-            font-size: 10px;
-            color: #718096;
-            margin-bottom: 3px;
+        .entry-subtitle {
+            display: table;
+            width: 100%;
+            font-style: italic;
+            font-size: 10pt;
+            margin-bottom: 4pt;
         }
-        .description {
-            font-size: 10px;
-            margin-top: 3px;
-            line-height: 1.4;
+        .subtitle-left {
+            display: table-cell;
+            width: 68%;
+        }
+        .subtitle-right {
+            display: table-cell;
+            text-align: right;
+            width: 32%;
+            padding-right: 0;
         }
         ul {
-            margin-left: 20px;
-            margin-top: 3px;
+            margin-top: 3pt;
+            margin-left: 18pt;
+            margin-bottom: 0;
         }
         ul li {
-            margin-bottom: 2px;
-            font-size: 10px;
+            margin-bottom: 3pt;
+            line-height: 1.3;
+            font-size: 10pt;
         }
-        .tech-stack {
-            font-size: 9px;
-            color: #4a5568;
-            font-style: italic;
+        .tech-line {
+            font-size: 9.5pt;
+            margin-top: 3pt;
+        }
+        .tech-line strong {
+            font-weight: bold;
+        }
+        .skill-category {
+            margin-bottom: 4pt;
+            font-size: 10pt;
+            line-height: 1.25;
+        }
+        .skill-category strong {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <h1>{{ $personalInfo->name ?? 'Your Name' }}</h1>
+    <!-- Header -->
+    <div class="header">
+        <h1>{{ $personalInfo->name ?? 'YOUR NAME' }}</h1>
         <div class="contact-info">
-            @if($personalInfo->email ?? false)<span>{{ $personalInfo->email }}</span>@endif
-            @if($personalInfo->phone ?? false)<span>{{ $personalInfo->phone }}</span>@endif
-            @if($personalInfo->address ?? false)<span>{{ $personalInfo->address }}</span>@endif
-            @if($personalInfo->linkedin ?? false)<span>LinkedIn: {{ str_replace(['https://', 'http://'], '', $personalInfo->linkedin) }}</span>@endif
-            @if($personalInfo->github ?? false)<span>GitHub: {{ str_replace(['https://', 'http://'], '', $personalInfo->github) }}</span>@endif
+            @if($personalInfo->address ?? false){{ $personalInfo->address }} |@endif
+            @if($personalInfo->phone ?? false) {{ $personalInfo->phone }} |@endif
+            @if($personalInfo->email ?? false) <a href="mailto:{{ $personalInfo->email }}">{{ $personalInfo->email }}</a>@endif<br>
+            @if($personalInfo->linkedin ?? false)<a href="{{ $personalInfo->linkedin }}">LinkedIn</a> |@endif
+            @if($personalInfo->github ?? false) <a href="{{ $personalInfo->github }}">GitHub</a>@endif
+            @if($personalInfo->website ?? false) | <a href="{{ $personalInfo->website }}">Portfolio</a>@endif
         </div>
+    </div>
 
-        @if($personalInfo->bio ?? false)
-        <div class="section">
-            <p class="description">{{ $personalInfo->bio }}</p>
+    <!-- Education -->
+    @if($education->count() > 0)
+    <div class="section-title">EDUCATION</div>
+    @foreach($education as $edu)
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">{{ $edu->institution }}</div>
+            <div class="entry-right">
+                @if($edu->start_date){{ $edu->start_date->format('M Y') }} – {{ $edu->end_date ? $edu->end_date->format('M Y') : 'Present' }}@endif
+            </div>
         </div>
+        <div class="entry-subtitle">
+            <div class="subtitle-left">{{ $edu->degree }}@if($edu->field_of_study), {{ $edu->field_of_study }}@endif</div>
+            <div class="subtitle-right">@if($edu->cgpa)GPA: {{ $edu->cgpa }}@endif</div>
+        </div>
+        @if($edu->description)
+        <div style="font-size: 9.5pt; margin-top: 2pt;">{{ $edu->description }}</div>
         @endif
+    </div>
+    @endforeach
+    @endif
 
-        <!-- Education -->
-        @if($education->count() > 0)
-        <div class="section">
-            <h2>EDUCATION</h2>
-            @foreach($education as $edu)
-            <div class="education">
-                <h3>{{ $edu->degree }} - {{ $edu->institution }}</h3>
-                <div class="meta">
-                    @if($edu->field_of_study){{ $edu->field_of_study }} | @endif
-                    @if($edu->start_date){{ $edu->start_date->format('M Y') }} - {{ $edu->end_date ? $edu->end_date->format('M Y') : 'Present' }}@endif
-                    @if($edu->cgpa) | CGPA: {{ $edu->cgpa }}@endif
-                </div>
-                @if($edu->description)
-                <p class="description">{{ $edu->description }}</p>
+    <!-- Experience -->
+    @if($experiences->count() > 0)
+    <div class="section-title">EXPERIENCE</div>
+    @foreach($experiences as $exp)
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">{{ $exp->organization }}</div>
+            <div class="entry-right">
+                @if($exp->start_date){{ $exp->start_date->format('M Y') }} – {{ $exp->end_date ? $exp->end_date->format('M Y') : 'Present' }}@endif
+            </div>
+        </div>
+        <div class="entry-subtitle">
+            <div class="subtitle-left">{{ $exp->title }}</div>
+            <div class="subtitle-right"></div>
+        </div>
+        @if($exp->description)
+        <ul>
+            @foreach(explode("\n", $exp->description) as $point)
+                @if(trim($point))
+                <li>{{ trim($point) }}</li>
                 @endif
-            </div>
             @endforeach
-        </div>
+        </ul>
         @endif
+    </div>
+    @endforeach
+    @endif
 
-        <!-- Skills -->
-        @if($skills->count() > 0 || $languages->count() > 0)
-        <div class="section">
-            <h2>SKILLS</h2>
-            @foreach($skills as $category => $categorySkills)
-            <div class="skill-category">
-                <strong>{{ $category }}:</strong> {{ $categorySkills->pluck('name')->join(', ') }}
+    <!-- Projects -->
+    @if($projects->count() > 0)
+    <div class="section-title">PROJECTS</div>
+    @foreach($projects as $project)
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">
+                {{ $project->title }}
+                @if($project->github_url) | <a href="{{ $project->github_url }}" style="font-weight: normal; font-size: 9pt;">GitHub</a>@endif
+                @if($project->demo_url) <a href="{{ $project->demo_url }}" style="font-weight: normal; font-size: 9pt;">Demo</a>@endif
             </div>
-            @endforeach
-            @if($languages->count() > 0)
-            <div class="skill-category">
-                <strong>Programming Languages:</strong> {{ $languages->pluck('name')->join(', ') }}
-            </div>
-            @endif
+            <div class="entry-right"></div>
         </div>
-        @endif
-
-        <!-- Experience -->
-        @if($experiences->count() > 0)
-        <div class="section">
-            <h2>EXPERIENCE</h2>
-            @foreach($experiences as $exp)
-            <div class="experience">
-                <h3>{{ $exp->title }} - {{ $exp->organization }}</h3>
-                <div class="meta">
-                    {{ ucfirst($exp->type) }}
-                    @if($exp->start_date) | {{ $exp->start_date->format('M Y') }} - {{ $exp->end_date ? $exp->end_date->format('M Y') : 'Present' }}@endif
-                </div>
-                @if($exp->description)
-                <p class="description">{{ $exp->description }}</p>
+        @if($project->description)
+        <ul>
+            @foreach(explode("\n", $project->description) as $point)
+                @if(trim($point))
+                <li>{{ trim($point) }}</li>
                 @endif
-            </div>
             @endforeach
-        </div>
+        </ul>
         @endif
-
-        <!-- Projects -->
-        @if($projects->count() > 0)
-        <div class="section">
-            <h2>PROJECTS</h2>
-            @foreach($projects as $project)
-            <div class="project">
-                <h3>{{ $project->title }}</h3>
-                @if($project->technologies)
-                <div class="tech-stack">Technologies: {{ is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies }}</div>
-                @endif
-                <p class="description">{{ $project->description }}</p>
-                @if($project->github_url || $project->demo_url)
-                <div class="meta">
-                    @if($project->github_url)GitHub: {{ str_replace(['https://', 'http://'], '', $project->github_url) }}@endif
-                    @if($project->demo_url) | Demo: {{ str_replace(['https://', 'http://'], '', $project->demo_url) }}@endif
-                </div>
-                @endif
-            </div>
-            @endforeach
-        </div>
-        @endif
-
-        <!-- Competitive Programming -->
-        @if($teamCompetitions->count() > 0 || $individualCompetitions->count() > 0)
-        <div class="section">
-            <h2>COMPETITIVE PROGRAMMING</h2>
-            
-            @if($teamCompetitions->count() > 0)
-            <h3>Team Competitions</h3>
-            <ul>
-                @foreach($teamCompetitions as $comp)
-                <li>
-                    <strong>{{ $comp->competition_name }} ({{ $comp->year }})</strong>
-                    @if($comp->team_name) - Team: {{ $comp->team_name }}@endif
-                    @if($comp->rank) - Rank: {{ $comp->rank }}@endif
-                    @if($comp->award) - {{ $comp->award }}@endif
-                </li>
-                @endforeach
-            </ul>
-            @endif
-
-            @if($individualCompetitions->count() > 0)
-            <h3>Individual Achievements</h3>
-            <ul>
-                @foreach($individualCompetitions as $comp)
-                <li>
-                    <strong>{{ $comp->platform }}</strong>
-                    @if($comp->rank)
-                     - {{ $comp->rank }}
-                    @endif
-                    @if($comp->rating)
-                     - Rating: {{ $comp->rating }}
-                    @endif
-                    @if($comp->max_rating)
-                     (Max: {{ $comp->max_rating }})
-                    @endif
-                    @if($comp->problems_solved)
-                     - {{ $comp->problems_solved }} problems solved
-                    @endif
-                </li>
-                @endforeach
-            </ul>
-            @endif
-        </div>
-        @endif
-
-        <!-- Online Judges -->
-        @if($judges->count() > 0)
-        <div class="section">
-            <h2>ONLINE JUDGE PROFILES</h2>
-            <ul>
-                @foreach($judges as $judge)
-                <li>
-                    <strong>{{ $judge->platform_name }}</strong> ({{ $judge->username }})
-                    @if($judge->problems_solved) - {{ $judge->problems_solved }} problems solved@endif
-                    @if($judge->rating) - Rating: {{ $judge->rating }}@endif
-                </li>
-                @endforeach
-            </ul>
+        @if($project->technologies)
+        <div class="tech-line">
+            <strong>Technologies:</strong> {{ is_array($project->technologies) ? implode(', ', $project->technologies) : $project->technologies }}
         </div>
         @endif
     </div>
+    @endforeach
+    @endif
+
+    <!-- Achievements -->
+    @if($achievements->count() > 0)
+    <div class="section-title">ACHIEVEMENTS & AWARDS</div>
+    @foreach($achievements as $achievement)
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">{{ $achievement->title }}@if($achievement->position) – {{ $achievement->position }}@endif</div>
+            <div class="entry-right">{{ $achievement->year }}</div>
+        </div>
+        <div style="font-size: 9.5pt; font-style: italic; margin-bottom: 2pt;">{{ $achievement->organization }}</div>
+        @if($achievement->description)
+        <div style="font-size: 9.5pt;">{{ $achievement->description }}</div>
+        @endif
+    </div>
+    @endforeach
+    @endif
+
+    <!-- Research & Publications -->
+    @if($research->count() > 0)
+    <div class="section-title">RESEARCH & PUBLICATIONS</div>
+    @foreach($research as $paper)
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">
+                {{ $paper->title }}
+                @if($paper->url) | <a href="{{ $paper->url }}" style="font-weight: normal; font-size: 9pt;">Link</a>@endif
+            </div>
+            <div class="entry-right">
+                @if($paper->published_date){{ $paper->published_date->format('M Y') }}@endif
+            </div>
+        </div>
+        <div style="font-size: 9.5pt; margin-bottom: 2pt;">{{ $paper->authors }}</div>
+        @if($paper->publication)
+        <div style="font-size: 9.5pt; font-style: italic; margin-bottom: 2pt;">{{ $paper->publication }}</div>
+        @endif
+        @if($paper->description)
+        <div style="font-size: 9.5pt;">{{ $paper->description }}</div>
+        @endif
+    </div>
+    @endforeach
+    @endif
+
+    <!-- Skills -->
+    @if($skills->count() > 0 || $languages->count() > 0)
+    <div class="section-title">TECHNICAL SKILLS</div>
+    @foreach($skills as $category => $categorySkills)
+    <div class="skill-category">
+        <strong>{{ $category }}:</strong> {{ $categorySkills->pluck('name')->join(', ') }}
+    </div>
+    @endforeach
+    @if($languages->count() > 0)
+    <div class="skill-category">
+        <strong>Programming Languages:</strong> {{ $languages->pluck('name')->join(', ') }}
+    </div>
+    @endif
+    @endif
+
+    <!-- Certifications -->
+    @if($certifications->count() > 0)
+    <div class="section-title">CERTIFICATIONS</div>
+    @foreach($certifications as $cert)
+    <div class="entry">
+        <div class="entry-header">
+            <div class="entry-left">{{ $cert->title }}</div>
+            <div class="entry-right">
+                @if($cert->start_date)
+                    {{ $cert->start_date->format('M Y') }}
+                    @if($cert->end_date) – {{ $cert->end_date->format('M Y') }}@endif
+                @endif
+            </div>
+        </div>
+        <div style="font-size: 9.5pt; font-style: italic;">{{ $cert->institution }}</div>
+    </div>
+    @endforeach
+    @endif
 </body>
 </html>

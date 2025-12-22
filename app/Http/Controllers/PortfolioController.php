@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Education;
 use App\Models\Experience;
-use App\Models\IndividualCompetition;
-use App\Models\OnlineJudge;
 use App\Models\PersonalInfo;
 use App\Models\ProgrammingLanguage;
 use App\Models\Project;
 use App\Models\Skill;
-use App\Models\TeamCompetition;
+use App\Models\Achievement;
+use App\Models\Research;
+use App\Models\Certification;
+use App\Models\Language;
 use Illuminate\Http\Request;
 
 class PortfolioController extends Controller
@@ -36,26 +37,7 @@ class PortfolioController extends Controller
         return view('projects', compact('projects'));
     }
 
-    /**
-     * Display the competitive programming page.
-     */
-    public function competitive()
-    {
-        $teamCompetitions = TeamCompetition::ordered()->get();
-        $individualCompetitions = IndividualCompetition::ordered()->get();
 
-        return view('competitive', compact('teamCompetitions', 'individualCompetitions'));
-    }
-
-    /**
-     * Display the online judges page.
-     */
-    public function judges()
-    {
-        $judges = OnlineJudge::ordered()->get();
-
-        return view('judges', compact('judges'));
-    }
 
     /**
      * Display the experience page.
@@ -86,22 +68,44 @@ class PortfolioController extends Controller
         $skills = Skill::ordered()->get()->groupBy('category');
         $languages = ProgrammingLanguage::ordered()->get();
         $projects = Project::ordered()->get();
-        $teamCompetitions = TeamCompetition::ordered()->get();
-        $individualCompetitions = IndividualCompetition::ordered()->get();
-        $judges = OnlineJudge::ordered()->get();
         $education = Education::ordered()->get();
         $experiences = Experience::ordered()->get();
+        $achievements = Achievement::ordered()->get();
+        $research = Research::ordered()->get();
+        $certifications = Certification::ordered()->get();
+        $spokenLanguages = Language::ordered()->get();
 
         return view('resume', compact(
             'personalInfo',
             'skills',
             'languages',
             'projects',
-            'teamCompetitions',
-            'individualCompetitions',
-            'judges',
             'education',
-            'experiences'
+            'experiences',
+            'achievements',
+            'research',
+            'certifications',
+            'spokenLanguages'
         ));
+    }
+
+    /**
+     * Display the achievements page.
+     */
+    public function achievements()
+    {
+        $achievements = Achievement::ordered()->get()->groupBy('category');
+
+        return view('achievements', compact('achievements'));
+    }
+
+    /**
+     * Display the research page.
+     */
+    public function research()
+    {
+        $research = Research::ordered()->get();
+
+        return view('research', compact('research'));
     }
 }

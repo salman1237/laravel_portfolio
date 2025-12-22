@@ -10,6 +10,10 @@ use App\Http\Controllers\Admin\ProgrammingLanguageController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\TeamCompetitionController;
+use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\CertificationController;
+use App\Http\Controllers\Admin\AchievementController;
+use App\Http\Controllers\Admin\ResearchController;
 use App\Http\Controllers\CVController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
@@ -20,10 +24,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/skills', [PortfolioController::class, 'skills'])->name('skills');
 Route::get('/projects', [PortfolioController::class, 'projects'])->name('projects');
-Route::get('/competitive', [PortfolioController::class, 'competitive'])->name('competitive');
-Route::get('/judges', [PortfolioController::class, 'judges'])->name('judges');
+
 Route::get('/experience', [PortfolioController::class, 'experience'])->name('experience');
 Route::get('/education', [PortfolioController::class, 'education'])->name('education');
+Route::get('/achievements', [PortfolioController::class, 'achievements'])->name('achievements');
+Route::get('/research', [PortfolioController::class, 'research'])->name('research');
 Route::get('/resume', [PortfolioController::class, 'resume'])->name('resume');
 Route::get('/cv/download', [CVController::class, 'download'])->name('cv.download');
 
@@ -50,6 +55,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('online-judges', OnlineJudgeController::class)->except(['show']);
     Route::resource('education', EducationController::class)->except(['show']);
     Route::resource('experiences', ExperienceController::class)->except(['show']);
+    
+    // New Resource Routes
+    Route::resource('languages', LanguageController::class)->except(['show']);
+    Route::resource('certifications', CertificationController::class)->except(['show']);
+    Route::resource('achievements', AchievementController::class)->except(['show']);
+    Route::resource('research', ResearchController::class)->except(['show']);
 });
 
 // Breeze Profile Routes

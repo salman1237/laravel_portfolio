@@ -28,7 +28,13 @@
                 <h3 class="text-lg font-medium text-gray-900 truncate">{{ $project->title }}</h3>
                 <p class="mt-1 text-sm text-gray-500 line-clamp-2">{{ $project->description }}</p>
                 @if($project->technologies)
-                <p class="mt-2 text-xs text-gray-400">{{ implode(', ', array_slice($project->technologies, 0, 3)) }}</p>
+                <p class="mt-2 text-xs text-gray-400">
+                    @if(is_array($project->technologies))
+                        {{ implode(', ', array_slice($project->technologies, 0, 3)) }}
+                    @else
+                        {{ $project->technologies }}
+                    @endif
+                </p>
                 @endif
                 <div class="mt-4 flex gap-2">
                     <a href="{{ route('admin.projects.edit', $project) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">Edit</a>

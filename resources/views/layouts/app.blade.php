@@ -28,11 +28,17 @@
                         <a href="{{ route('projects') }}" class="{{ request()->routeIs('projects') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Projects
                         </a>
-                       <a href="{{ route('competitive') }}" class="{{ request()->routeIs('competitive') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Competitive Programming
+                        <a href="{{ route('education') }}" class="{{ request()->routeIs('education') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Education
                         </a>
                         <a href="{{ route('experience') }}" class="{{ request()->routeIs('experience') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Experience
+                        </a>
+                        <a href="{{ route('achievements') }}" class="{{ request()->routeIs('achievements') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Achievements
+                        </a>
+                        <a href="{{ route('research') }}" class="{{ request()->routeIs('research') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Research
                         </a>
                         <a href="{{ route('resume') }}" class="{{ request()->routeIs('resume') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Resume

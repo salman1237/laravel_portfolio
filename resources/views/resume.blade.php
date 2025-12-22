@@ -113,7 +113,13 @@
                 <div class="mb-4">
                     <h4 class="font-semibold text-gray-900">{{ $project->title }}</h4>
                     @if($project->technologies)
-                    <p class="text-xs text-gray-500 italic">{{ implode(', ', $project->technologies) }}</p>
+                    <p class="text-xs text-gray-500 italic">
+                        @if(is_array($project->technologies))
+                            {{ implode(', ', $project->technologies) }}
+                        @else
+                            {{ $project->technologies }}
+                        @endif
+                    </p>
                     @endif
                     <p class="mt-1 text-sm text-gray-700">{{ $project->description }}</p>
                     <div class="mt-1 text-sm space-x-4">
@@ -129,64 +135,45 @@
             </div>
             @endif
 
-            <!-- Competitive Programming -->
-            @if($teamCompetitions->count() > 0 || $individualCompetitions->count() > 0)
+            <!-- Achievements -->
+            @if($achievements->count() > 0)
             <div class="mb-8">
-                <h3 class="text-lg font-bold text-gray-900 mb-3">Competitive Programming</h3>
-                
-                @if($teamCompetitions->count() > 0)
-                <h4 class="font-semibold text-gray-900 mb-2">Team Competitions</h4>
-                <ul class="list-disc list-inside mb-4 text-sm text-gray-700 space-y-1">
-                    @foreach($teamCompetitions as $comp)
-                    <li>
-                        {{ $comp->competition_name }} ({{ $comp->year }})
-                        @if($comp->rank)
-                            - Rank: {{ $comp->rank }}
-                        @endif
-                        @if($comp->award)
-                            - {{ $comp->award }}
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-                @endif
-
-                @if($individualCompetitions->count() > 0)
-                <h4 class="font-semibold text-gray-900 mb-2">Individual Achievements</h4>
-                <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
-                    @foreach($individualCompetitions as $comp)
-                    <li>
-                        {{ $comp->platform }}
-                        @if($comp->rank)
-                            - {{ $comp->rank }}
-                        @endif
-                        @if($comp->rating)
-                            - Rating: {{ $comp->rating }}
-                        @endif
-                        @if($comp->problems_solved)
-                            - {{ $comp->problems_solved }} problems
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-                @endif
+                <h3 class="text-lg font-bold text-gray-900 mb-3">Achievements & Awards</h3>
+                @foreach($achievements as $achievement)
+                <div class="mb-3">
+                    <h4 class="font-semibold text-gray-900">{{ $achievement->title }}</h4>
+                    @if($achievement->position)
+                        <span class="inline-block px-2 py-1 text-xs font-semibold rounded bg-indigo-100 text-indigo-800">{{ $achievement->position }}</span>
+                    @endif
+                    <p class="text-sm text-gray-600 mt-1">{{ $achievement->organization }} ({{ $achievement->year }})</p>
+                    @if($achievement->description)
+                    <p class="mt-1 text-sm text-gray-700">{{ $achievement->description }}</p>
+                    @endif
+                </div>
+                @endforeach
             </div>
             @endif
 
-            <!-- Online Judges -->
-            @if($judges->count() > 0)
+            <!-- Research & Publications -->
+            @if($research->count() > 0)
             <div class="mb-8">
-                <h3 class="text-lg font-bold text-gray-900 mb-3">Online Judge Profiles</h3>
-                <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
-                    @foreach($judges as $judge)
-                    <li>
-                        {{ $judge->platform_name }} ({{ $judge->username }})
-                        @if($judge->problems_solved)
-                            - {{ $judge->problems_solved }} problems
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
+                <h3 class="text-lg font-bold text-gray-900 mb-3">Research & Publications</h3>
+                @foreach($research as $paper)
+                <div class="mb-4">
+                    <h4 class="font-semibold text-gray-900">{{ $paper->title }}</h4>
+                    <p class="text-xs text-gray-500 italic">{{ ucwords(str_replace('_', ' ', $paper->type)) }}</p>
+                    <p class="text-sm text-gray-600 mt-1">{{ $paper->authors }}</p>
+                    @if($paper->publication)
+                    <p class="text-sm text-gray-600">{{ $paper->publication }}</p>
+                    @endif
+                    @if($paper->published_date)
+                    <p class="text-sm text-gray-500">{{ $paper->published_date->format('F Y') }}</p>
+                    @endif
+                    @if($paper->url)
+                    <a href="{{ $paper->url }}" target="_blank" class="text-xs text-indigo-600 hover:text-indigo-500">View Publication →</a>
+                    @endif
+                </div>
+                @endforeach
             </div>
             @endif
         </div>

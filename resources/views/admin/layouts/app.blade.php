@@ -20,12 +20,17 @@
                             <h1 class="text-white font-bold text-xl">Portfolio Admin</h1>
                         </div>
                         <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
-                                <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
-                                <a href="{{ route('admin.personal-info.edit') }}" class="{{ request()->routeIs('admin.personal-info.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Personal Info</a>
-                                <a href="{{ route('admin.skills.index') }}" class="{{ request()->routeIs('admin.skills.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Skills</a>
-                                <a href="{{ route('admin.projects.index') }}" class="{{ request()->routeIs('admin.projects.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-                                <a href="{{ route('admin.education.index') }}" class="{{ request()->routeIs('admin.education.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Education</a>
+                            <div class="ml-10 flex items-baseline space-x-2">
+                                <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Dashboard</a>
+                                <a href="{{ route('admin.personal-info.edit') }}" class="{{ request()->routeIs('admin.personal-info.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Profile</a>
+                                <a href="{{ route('admin.skills.index') }}" class="{{ request()->routeIs('admin.skills.*') || request()->routeIs('admin.programming-languages.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Skills</a>
+                                <a href="{{ route('admin.projects.index') }}" class="{{ request()->routeIs('admin.projects.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Projects</a>
+                                <a href="{{ route('admin.education.index') }}" class="{{ request()->routeIs('admin.education.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Education</a>
+                                <a href="{{ route('admin.certifications.index') }}" class="{{ request()->routeIs('admin.certifications.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Certifications</a>
+                                <a href="{{ route('admin.experiences.index') }}" class="{{ request()->routeIs('admin.experiences.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Experience</a>
+                                <a href="{{ route('admin.achievements.index') }}" class="{{ request()->routeIs('admin.achievements.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Achievements</a>
+                                <a href="{{ route('admin.research.index') }}" class="{{ request()->routeIs('admin.research.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Research</a>
+                                <a href="{{ route('admin.languages.index') }}" class="{{ request()->routeIs('admin.languages.*') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }} rounded-md px-2 py-2 text-xs font-medium">Languages</a>
                             </div>
                         </div>
                     </div>

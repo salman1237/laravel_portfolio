@@ -25,11 +25,18 @@
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $project->title }}</h3>
                 <p class="text-gray-600 text-sm mb-4">{{ $project->description }}</p>
                 
+                
                 @if($project->technologies)
                 <div class="flex flex-wrap gap-2 mb-4">
-                    @foreach($project->technologies as $tech)
-                    <span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">{{ $tech }}</span>
-                    @endforeach
+                    @if(is_array($project->technologies))
+                        @foreach($project->technologies as $tech)
+                        <span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">{{ $tech }}</span>
+                        @endforeach
+                    @else
+                        @foreach(explode(',', $project->technologies) as $tech)
+                        <span class="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs rounded">{{ trim($tech) }}</span>
+                        @endforeach
+                    @endif
                 </div>
                 @endif
 
