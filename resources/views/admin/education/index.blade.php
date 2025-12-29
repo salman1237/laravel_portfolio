@@ -3,63 +3,54 @@
 @section('page-title', 'Manage Education')
 
 @section('content')
-<div class="px-4 sm:px-0">
-    <div class="sm:flex sm:items-center">
-        <div class="sm:flex-auto">
-            <p class="mt-2 text-sm text-gray-700">Your educational qualifications and academic history.</p>
-        </div>
-        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <a href="{{ route('admin.education.create') }}" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">
-                Add Education
-            </a>
-        </div>
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <p class="text-gray-400">Your educational qualifications and academic history.</p>
+        <a href="{{ route('admin.education.create') }}" class="btn-gradient text-sm">
+            + Add Education
+        </a>
     </div>
-    <div class="mt-8 flex flex-col">
-        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Degree</th>
-                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Institution</th>
-                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Duration</th>
-                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">CGPA</th>
-                                <th class="relative py-3.5 pl-3 pr-4 sm:pr-6">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            @forelse($education as $edu)
-                            <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{{ $edu->degree }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $edu->institution }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    @if($edu->start_date)
-                                        {{ $edu->start_date->format('Y') }} - {{ $edu->end_date ? $edu->end_date->format('Y') : 'Present' }}
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $edu->cgpa ?? 'N/A' }}</td>
-                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a href="{{ route('admin.education.edit', $edu) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                                    <form action="{{ route('admin.education.destroy', $edu) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="px-3 py-4 text-sm text-gray-500 text-center">No education records found.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+
+    <div class="glass-card rounded-2xl overflow-hidden">
+        <table class="min-w-full">
+            <thead class="border-b border-white/10">
+                <tr>
+                    <th class="py-4 pl-6 pr-3 text-left text-sm font-semibold text-gray-300">Degree</th>
+                    <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Institution</th>
+                    <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Duration</th>
+                    <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">CGPA</th>
+                    <th class="py-4 pl-3 pr-6 text-right text-sm font-semibold text-gray-300">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @forelse($education as $edu)
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-white">{{ $edu->degree }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $edu->institution }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-400">
+                        @if($edu->start_date)
+                            {{ $edu->start_date->format('Y') }} - {{ $edu->end_date ? $edu->end_date->format('Y') : 'Present' }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-indigo-400 font-medium">{{ $edu->cgpa ?? 'N/A' }}</td>
+                    <td class="whitespace-nowrap py-4 pl-3 pr-6 text-right text-sm font-medium space-x-3">
+                        <a href="{{ route('admin.education.edit', $edu) }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">Edit</a>
+                        <form action="{{ route('admin.education.destroy', $edu) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-400 hover:text-red-300 transition-colors">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="px-6 py-8 text-sm text-gray-500 text-center">No education records found.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

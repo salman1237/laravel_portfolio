@@ -276,5 +276,15 @@
     </div>
     @endforeach
     @endif
+
+    <!-- Languages -->
+    @if($spokenLanguages->count() > 0)
+    <div class="section-title">LANGUAGES</div>
+    <div class="skill-category">
+        @foreach($spokenLanguages as $lang)
+            <strong>{{ $lang->name }}:</strong> {{ ucfirst($lang->proficiency) }}@if(!$loop->last), @endif
+        @endforeach
+    </div>
+    @endif
 </body>
 </html>

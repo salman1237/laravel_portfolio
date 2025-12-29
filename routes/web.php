@@ -29,6 +29,8 @@ Route::get('/experience', [PortfolioController::class, 'experience'])->name('exp
 Route::get('/education', [PortfolioController::class, 'education'])->name('education');
 Route::get('/achievements', [PortfolioController::class, 'achievements'])->name('achievements');
 Route::get('/research', [PortfolioController::class, 'research'])->name('research');
+Route::get('/certifications', [PortfolioController::class, 'certifications'])->name('certifications');
+Route::get('/languages', [PortfolioController::class, 'languages'])->name('languages');
 Route::get('/resume', [PortfolioController::class, 'resume'])->name('resume');
 Route::get('/cv/download', [CVController::class, 'download'])->name('cv.download');
 

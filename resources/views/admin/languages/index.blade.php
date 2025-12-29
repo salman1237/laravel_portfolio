@@ -1,66 +1,57 @@
 @extends('admin.layouts.app')
 
-@section('page-title', 'Manage Languages')
+@section('page-title', 'Manage Spoken Languages')
 
 @section('content')
-<div class="px-4 sm:px-0">
-    <div class="sm:flex sm:items-center">
-        <div class="sm:flex-auto">
-            <p class="mt-2 text-sm text-gray-700">Manage spoken languages with proficiency levels.</p>
-        </div>
-        <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <a href="{{ route('admin.languages.create') }}" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">
-                Add Language
-            </a>
-        </div>
+<div class="space-y-6">
+    <div class="flex items-center justify-between">
+        <p class="text-gray-400">Manage spoken languages with proficiency levels.</p>
+        <a href="{{ route('admin.languages.create') }}" class="btn-gradient text-sm">
+            + Add Language
+        </a>
     </div>
-    <div class="mt-8 flex flex-col">
-        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Language</th>
-                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Proficiency</th>
-                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Order</th>
-                                <th class="relative py-3.5 pl-3 pr-4 sm:pr-6">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            @forelse($languages as $language)
-                            <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{{ $language->name }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 
-                                        @if($language->proficiency == 'native') bg-green-100 text-green-800
-                                        @elseif($language->proficiency == 'advanced') bg-blue-100 text-blue-800
-                                        @elseif($language->proficiency == 'intermediate') bg-yellow-100 text-yellow-800
-                                        @else bg-gray-100 text-gray-800
-                                        @endif">
-                                        {{ ucfirst($language->proficiency) }}
-                                    </span>
-                                </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $language->order }}</td>
-                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a href="{{ route('admin.languages.edit', $language) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
-                                    <form action="{{ route('admin.languages.destroy', $language) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="px-3 py-4 text-sm text-gray-500 text-center">No languages found.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+
+    <div class="glass-card rounded-2xl overflow-hidden">
+        <table class="min-w-full">
+            <thead class="border-b border-white/10">
+                <tr>
+                    <th class="py-4 pl-6 pr-3 text-left text-sm font-semibold text-gray-300">Language</th>
+                    <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Proficiency</th>
+                    <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Order</th>
+                    <th class="py-4 pl-3 pr-6 text-right text-sm font-semibold text-gray-300">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @forelse($languages as $language)
+                <tr class="hover:bg-white/5 transition-colors">
+                    <td class="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-white">{{ $language->name }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm">
+                        <span class="inline-flex rounded-full px-2 py-1 text-xs font-semibold
+                            @if($language->proficiency == 'native') bg-green-500/20 text-green-300 border border-green-500/30
+                            @elseif($language->proficiency == 'advanced') bg-blue-500/20 text-blue-300 border border-blue-500/30
+                            @elseif($language->proficiency == 'intermediate') bg-yellow-500/20 text-yellow-300 border border-yellow-500/30
+                            @else bg-gray-500/20 text-gray-300 border border-gray-500/30
+                            @endif">
+                            {{ ucfirst($language->proficiency) }}
+                        </span>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-400">{{ $language->order }}</td>
+                    <td class="whitespace-nowrap py-4 pl-3 pr-6 text-right text-sm font-medium space-x-3">
+                        <a href="{{ route('admin.languages.edit', $language) }}" class="text-indigo-400 hover:text-indigo-300 transition-colors">Edit</a>
+                        <form action="{{ route('admin.languages.destroy', $language) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-400 hover:text-red-300 transition-colors">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-8 text-sm text-gray-500 text-center">No languages found.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

@@ -108,4 +108,24 @@ class PortfolioController extends Controller
 
         return view('research', compact('research'));
     }
+
+    /**
+     * Display the certifications page.
+     */
+    public function certifications()
+    {
+        $certifications = Certification::ordered()->get();
+
+        return view('certifications', compact('certifications'));
+    }
+
+    /**
+     * Display the spoken languages page.
+     */
+    public function languages()
+    {
+        $languages = Language::ordered()->get();
+
+        return view('languages', compact('languages'));
+    }
 }
