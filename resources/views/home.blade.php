@@ -13,6 +13,7 @@
             </div>
         @endif
         <h1 class="mt-8 text-5xl md:text-6xl font-extrabold gradient-text text-glow">{{ $personalInfo->name ?? 'Welcome' }}</h1>
+        <h2 class="mt-2 text-2xl font-semibold gradient-text">{{ $personalInfo->title ?? 'Entrepreneur' }}</h2>
         <p class="mt-4 text-xl text-gray-300 max-w-5xl mx-auto text-justify leading-relaxed">{{ $personalInfo->bio ?? 'Passionate Developer & Problem Solver' }}</p>
         <div class="mt-10 flex justify-center gap-4 flex-wrap">
             <a href="{{ route('projects') }}" class="btn-gradient">
