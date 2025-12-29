@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Hero Section -->
-    <div class="text-center py-20">
+    <div class="text-center py-12 animate-fade-in">
         @if($personalInfo && $personalInfo->photo)
             <div class="relative inline-block">
                 <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-lg opacity-50"></div>
@@ -13,7 +13,7 @@
             </div>
         @endif
         <h1 class="mt-8 text-5xl md:text-6xl font-extrabold gradient-text text-glow">{{ $personalInfo->name ?? 'Welcome' }}</h1>
-        <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto text-justify leading-relaxed">{{ $personalInfo->bio ?? 'Passionate Developer & Problem Solver' }}</p>
+        <p class="mt-4 text-xl text-gray-300 max-w-5xl mx-auto text-justify leading-relaxed">{{ $personalInfo->bio ?? 'Passionate Developer & Problem Solver' }}</p>
         <div class="mt-10 flex justify-center gap-4 flex-wrap">
             <a href="{{ route('projects') }}" class="btn-gradient">
                 View Projects
@@ -27,7 +27,7 @@
     <!-- Quick Summary -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
         <!-- Skills Preview by Category -->
-        <div class="glass-card rounded-2xl hover-lift">
+        <div class="glass-card rounded-2xl hover-lift animate-fade-in-delay-1">
             <div class="px-6 py-6">
                 <h3 class="section-title">Skills</h3>
                 <div class="space-y-5">
