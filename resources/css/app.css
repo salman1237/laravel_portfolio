@@ -7,16 +7,23 @@
 
 /* ===== Base Layer Customization ===== */
 @layer base {
+    html {
+        scroll-behavior: smooth;
+        background: #0f0f23;
+    }
+
     body {
         @apply font-sans;
         background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%);
-        background-attachment: fixed;
+        background-size: cover;
         min-height: 100vh;
     }
 
-    /* Smooth scrolling */
-    html {
-        scroll-behavior: smooth;
+    /* Fixed background for desktop only */
+    @media (min-width: 768px) {
+        body {
+            background-attachment: fixed;
+        }
     }
 }
 
