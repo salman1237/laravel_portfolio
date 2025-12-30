@@ -9,17 +9,20 @@
 @layer base {
     html {
         scroll-behavior: smooth;
-        background: #0f0f23;
+        background-color: #0f0f23 !important;
     }
 
     body {
         @apply font-sans;
-        background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%);
-        background-size: cover;
+        background-color: #0f0f23 !important;
+        background-image: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%) !important;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         min-height: 100vh;
+        min-height: -webkit-fill-available;
     }
 
-    /* Fixed background for desktop only */
+    /* Fixed background for desktop only - iOS doesn't support this */
     @media (min-width: 768px) {
         body {
             background-attachment: fixed;
