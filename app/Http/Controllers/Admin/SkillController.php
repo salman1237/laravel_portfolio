@@ -33,9 +33,16 @@ class SkillController extends Controller
         $validated = $request->validate([
             'category' => 'required|string|max:255',
             'name' => 'required|string|max:255',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'proficiency_level' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
         ]);
+
+        // Handle icon upload
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('skills/icons', 'public');
+            $validated['icon'] = $iconPath;
+        }
 
         Skill::create($validated);
 
@@ -59,9 +66,21 @@ class SkillController extends Controller
         $validated = $request->validate([
             'category' => 'required|string|max:255',
             'name' => 'required|string|max:255',
+            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'proficiency_level' => 'nullable|string|max:255',
             'order' => 'nullable|integer',
         ]);
+
+        // Handle icon upload
+        if ($request->hasFile('icon')) {
+            // Delete old icon if exists
+            if ($skill->icon && \Storage::disk('public')->exists($skill->icon)) {
+                \Storage::disk('public')->delete($skill->icon);
+            }
+            
+            $iconPath = $request->file('icon')->store('skills/icons', 'public');
+            $validated['icon'] = $iconPath;
+        }
 
         $skill->update($validated);
 

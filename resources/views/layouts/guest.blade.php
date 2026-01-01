@@ -19,7 +19,12 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <div>
                 <a href="/" class="flex items-center justify-center">
-                    <h1 class="text-3xl font-bold gradient-text text-glow">{{ config('app.name', 'Portfolio') }}</h1>
+                    <h1 class="text-3xl font-bold gradient-text text-glow">
+                        @php
+                            $personalInfo = \App\Models\PersonalInfo::first();
+                        @endphp
+                        {{ $personalInfo->name ?? 'Portfolio' }}
+                    </h1>
                 </a>
             </div>
 

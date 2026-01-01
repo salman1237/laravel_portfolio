@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PersonalInfo;
 use App\Models\Skill;
+use App\Models\SocialLink;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,19 +16,23 @@ class HomeController extends Controller
     {
         $personalInfo = PersonalInfo::first();
         
-        // Get languages and frameworks
-        $languages = Skill::where('category', 'Languages and Framework')
-            ->ordered()
-            ->take(6)
-            ->get();
-        
-        // Get other skills (Software Development, AI & ML, Project Management)
-        $skills = Skill::whereNotIn('category', ['Languages and Framework'])
-            ->ordered()
+        // Get all skills grouped by category (including Languages and Framework)
+        $skills = Skill::ordered()
             ->get()
             ->groupBy('category');
+        
+        // Get recent experiences (top 4)
+        $experiences = \App\Models\Experience::ordered()
+            ->take(4)
+            ->get();
 
-        return view('home', compact('personalInfo', 'skills', 'languages'));
+        // Get active partnerships
+        $partnerships = \App\Models\Partnership::active()->ordered()->get();
+
+        // Get active social links
+        $socialLinks = SocialLink::active()->get();
+
+        return view('home', compact('personalInfo', 'skills', 'experiences', 'partnerships', 'socialLinks'));
     }
 }
 

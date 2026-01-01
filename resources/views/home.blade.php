@@ -57,26 +57,79 @@
             </div>
         </div>
 
-        <!-- Programming Languages & Frameworks Preview -->
-        <div class="glass-card rounded-2xl hover-lift">
+        <!-- Experience Preview -->
+        <div class="glass-card rounded-2xl hover-lift animate-fade-in-delay-1">
             <div class="px-6 py-6">
-                <h3 class="section-title">Languages & Frameworks</h3>
-                <div class="flex flex-wrap gap-2">
-                    @forelse($languages as $language)
-                        <span class="skill-badge">
-                            {{ $language->name }}
-                        </span>
+                <h3 class="section-title">Experience</h3>
+                <div class="space-y-4">
+                    @forelse($experiences as $exp)
+                        <div class="border-l-2 border-indigo-500/30 pl-4">
+                            <div class="flex items-start justify-between gap-2">
+                                <h4 class="text-base font-semibold text-white">{{ $exp->title }}</h4>
+                                <span class="px-2 py-0.5 text-xs font-medium rounded-full flex-shrink-0
+                                    @if($exp->type === 'work') bg-blue-500/20 text-blue-300 border border-blue-500/30
+                                    @elseif($exp->type === 'leadership') bg-purple-500/20 text-purple-300 border border-purple-500/30
+                                    @else bg-green-500/20 text-green-300 border border-green-500/30
+                                    @endif">
+                                    {{ ucfirst($exp->type) }}
+                                </span>
+                            </div>
+                            <p class="text-sm gradient-text-cool font-medium mt-1">{{ $exp->organization }}</p>
+                            @if($exp->start_date)
+                            <p class="text-xs text-gray-400 mt-1">
+                                {{ $exp->start_date->format('M Y') }} - {{ $exp->end_date ? $exp->end_date->format('M Y') : 'Present' }}
+                            </p>
+                            @endif
+                        </div>
                     @empty
-                        <p class="text-sm text-gray-400">No languages added yet.</p>
+                        <p class="text-sm text-gray-400">No experience records yet.</p>
                     @endforelse
                 </div>
-                <a href="{{ route('skills') }}" class="mt-6 inline-flex items-center text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
-                    View all languages 
+                <a href="{{ route('experience') }}" class="mt-6 inline-flex items-center text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                    View all experience 
                     <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
         </div>
     </div>
+
+    <!-- Partnership & Collaboration Section -->
+    @if($partnerships->count() > 0)
+    <div class="mt-12 relative py-16 bg-gradient-to-b from-slate-900/50 to-slate-800/30 rounded-2xl overflow-hidden">
+        <div class="relative z-10 text-center mb-12">
+            <h3 class="text-4xl font-bold text-white mb-3 text-glow">
+                Partnership & Collaboration
+            </h3>
+            <p class="text-lg text-gray-300">Organizations I've worked with</p>
+        </div>
+        
+        <div class="relative z-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 px-4">
+            @foreach($partnerships as $partnership)
+                <div class="bg-white rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 group cursor-pointer">
+                    @if($partnership->url)
+                        <a href="{{ $partnership->url }}" target="_blank" class="block p-6">
+                            <div class="flex items-center justify-center h-24">
+                                <img src="{{ asset('storage/' . $partnership->logo) }}" 
+                                     alt="{{ $partnership->name }}" 
+                                     class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                                     title="{{ $partnership->name }}">
+                            </div>
+                        </a>
+                    @else
+                        <div class="p-6">
+                            <div class="flex items-center justify-center h-24">
+                                <img src="{{ asset('storage/' . $partnership->logo) }}" 
+                                     alt="{{ $partnership->name }}" 
+                                     class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                                     title="{{ $partnership->name }}">
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
 
     <!-- Contact Section -->
     <div class="mt-12 glass-card rounded-2xl hover-lift">
@@ -105,28 +158,18 @@
                         </div>
                     </div>
                 @endif
-                @if($personalInfo->linkedin ?? false)
+                
+                @foreach($socialLinks as $link)
                     <div class="flex items-center space-x-3">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                            <img src="{{ asset('storage/' . $link->icon) }}" alt="{{ $link->name }}" class="w-5 h-5 object-contain">
                         </div>
                         <div>
-                            <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">LinkedIn</span>
-                            <a href="{{ $personalInfo->linkedin }}" target="_blank" class="block text-sm text-blue-400 hover:text-blue-300 transition-colors">Profile</a>
+                            <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">{{ $link->name }}</span>
+                            <a href="{{ $link->url }}" target="_blank" class="block text-sm text-indigo-400 hover:text-indigo-300 transition-colors">Visit Profile</a>
                         </div>
                     </div>
-                @endif
-                @if($personalInfo->github ?? false)
-                    <div class="flex items-center space-x-3">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center">
-                            <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        </div>
-                        <div>
-                            <span class="text-xs font-medium text-gray-500 uppercase tracking-wide">GitHub</span>
-                            <a href="{{ $personalInfo->github }}" target="_blank" class="block text-sm text-gray-300 hover:text-white transition-colors">Profile</a>
-                        </div>
-                    </div>
-                @endif
+                @endforeach
             </div>
         </div>
     </div>

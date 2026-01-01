@@ -89,6 +89,34 @@
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/></svg>
                         Spoken Languages
                     </a>
+
+                    <!-- Partnerships -->
+                    <a href="{{ route('admin.partnerships.index') }}" class="{{ request()->routeIs('admin.partnerships.*') ? 'bg-indigo-500/20 text-white border-indigo-500' : 'text-gray-300 hover:bg-white/5 hover:text-white border-transparent' }} flex items-center px-3 py-2.5 text-sm font-medium rounded-xl border transition-all">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        Partnerships
+                    </a>
+
+                    <!-- Social Links -->
+                    <a href="{{ route('admin.social-links.index') }}" class="{{ request()->routeIs('admin.social-links.*') ? 'bg-indigo-500/20 text-white border-indigo-500' : 'text-gray-300 hover:bg-white/5 hover:text-white border-transparent' }} flex items-center px-3 py-2.5 text-sm font-medium rounded-xl border transition-all">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                        Social Links
+                    </a>
+
+                    <!-- Messages -->
+                    <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'bg-indigo-500/20 text-white border-indigo-500' : 'text-gray-300 hover:bg-white/5 hover:text-white border-transparent' }} flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-xl border transition-all">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            Messages
+                        </div>
+                        @php
+                            $unreadCount = \App\Models\Message::where('is_read', false)->count();
+                        @endphp
+                        @if($unreadCount > 0)
+                            <span class="px-2 py-0.5 bg-red-500 text-white text-xs rounded-full font-semibold">
+                                {{ $unreadCount }}
+                            </span>
+                        @endif
+                    </a>
                 </nav>
 
                 <!-- Bottom Section -->

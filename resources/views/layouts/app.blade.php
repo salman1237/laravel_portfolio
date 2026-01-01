@@ -61,11 +61,6 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    @auth
-                        <a href="{{ route('admin.dashboard') }}" class="btn-gradient text-sm hidden sm:inline-flex">
-                            Admin
-                        </a>
-                    @endauth
                     <!-- Mobile menu button -->
                     <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
@@ -95,11 +90,6 @@
                 <a href="{{ route('certifications') }}" class="{{ request()->routeIs('certifications') ? 'bg-indigo-500/20 text-white border-l-2 border-indigo-400' : 'text-gray-300 hover:bg-white/5 hover:text-white' }} block pl-3 pr-4 py-2 text-base font-medium transition-colors">Certifications</a>
                 <a href="{{ route('languages') }}" class="{{ request()->routeIs('languages') ? 'bg-indigo-500/20 text-white border-l-2 border-indigo-400' : 'text-gray-300 hover:bg-white/5 hover:text-white' }} block pl-3 pr-4 py-2 text-base font-medium transition-colors">Languages</a>
                 <a href="{{ route('resume') }}" class="{{ request()->routeIs('resume') ? 'bg-indigo-500/20 text-white border-l-2 border-indigo-400' : 'text-gray-300 hover:bg-white/5 hover:text-white' }} block pl-3 pr-4 py-2 text-base font-medium transition-colors">Resume</a>
-                @auth
-                    <div class="pt-2 border-t border-white/10">
-                        <a href="{{ route('admin.dashboard') }}" class="block pl-3 pr-4 py-2 text-base font-medium text-indigo-400 hover:text-indigo-300 transition-colors">Admin Panel</a>
-                    </div>
-                @endauth
             </div>
         </div>
     </nav>
@@ -114,10 +104,36 @@
         <div class="max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div>
-                    <h3 class="text-sm font-semibold text-indigo-400 tracking-wider uppercase">About</h3>
-                    <p class="mt-4 text-sm sm:text-base text-gray-400 text-justify leading-relaxed">
-                        {{ ($personalInfo->bio ?? 'Portfolio website') }}
-                    </p>
+                    <h3 class="text-sm font-semibold text-indigo-400 tracking-wider uppercase mb-4">CONTACT ME</h3>
+                    
+                    @if(session('success'))
+                        <div class="mb-4 p-3 rounded-lg bg-green-500/20 border border-green-500/30">
+                            <p class="text-sm text-green-300">{{ session('success') }}</p>
+                        </div>
+                    @endif
+                    
+                    <form action="{{ route('contact.send') }}" method="POST" class="space-y-3">
+                        @csrf
+                        <div>
+                            <input type="email" name="email" required
+                                placeholder="Your Email"
+                                style="background-color: rgb(30, 41, 59) !important; color: white !important;"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-600/50 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 text-sm transition-all">
+                            @error('email')
+                                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <textarea name="message" rows="4" required
+                                placeholder="Your Message"
+                                style="background-color: rgb(30, 41, 59) !important; color: white !important;"
+                                class="w-full px-4 py-3 rounded-lg border border-slate-600/50 placeholder-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/50 text-sm resize-none transition-all"></textarea>
+                            @error('message')
+                                <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn-gradient w-full text-sm">Send Message</button>
+                    </form>
                 </div>
                 <div>
                     <h3 class="text-sm font-semibold text-indigo-400 tracking-wider uppercase">Quick Links</h3>

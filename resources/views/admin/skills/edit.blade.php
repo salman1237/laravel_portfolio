@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-2xl">
-    <form method="POST" action="{{ route('admin.skills.update', $skill) }}" class="space-y-6">
+    <form method="POST" action="{{ route('admin.skills.update', $skill) }}" enctype="multipart/form-data" class="space-y-6">
         @csrf
         @method('PUT')
         <div class="glass-card rounded-2xl p-6">
@@ -19,6 +19,19 @@
                     <label for="name" class="block text-sm font-medium text-gray-300">Skill Name *</label>
                     <input type="text" name="name" id="name" value="{{ old('name', $skill->name) }}" required
                         class="mt-1 block w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 px-4 py-3">
+                </div>
+
+                <div>
+                    <label for="icon" class="block text-sm font-medium text-gray-300">Icon (Optional)</label>
+                    @if($skill->icon)
+                        <div class="mt-2 mb-3">
+                            <img src="{{ asset('storage/' . $skill->icon) }}" alt="Current Icon" class="w-16 h-16 rounded-lg border border-white/20">
+                            <p class="text-xs text-gray-400 mt-1">Current icon</p>
+                        </div>
+                    @endif
+                    <input type="file" name="icon" id="icon" accept="image/*"
+                        class="mt-1 block w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 px-4 py-3 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-500 file:text-white hover:file:bg-indigo-600">
+                    <p class="mt-1 text-xs text-gray-400">PNG, JPG, GIF, SVG up to 2MB. Leave empty to keep current icon.</p>
                 </div>
 
                 <div>

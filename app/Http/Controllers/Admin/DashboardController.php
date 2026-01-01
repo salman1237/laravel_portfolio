@@ -12,6 +12,7 @@ use App\Models\Research;
 use App\Models\Certification;
 use App\Models\Language;
 use App\Models\ProgrammingLanguage;
+use App\Models\Message;
 
 class DashboardController extends Controller
 {
@@ -32,6 +33,8 @@ class DashboardController extends Controller
             'languages' => Language::count(),
         ];
 
-        return view('admin.dashboard', compact('statistics'));
+        $unreadMessages = Message::unread()->count();
+
+        return view('admin.dashboard', compact('statistics', 'unreadMessages'));
     }
 }

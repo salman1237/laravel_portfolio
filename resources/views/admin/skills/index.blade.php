@@ -16,6 +16,7 @@
             <thead class="border-b border-white/10">
                 <tr>
                     <th class="py-4 pl-6 pr-3 text-left text-sm font-semibold text-gray-300">Category</th>
+                    <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Icon</th>
                     <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Name</th>
                     <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Proficiency</th>
                     <th class="px-3 py-4 text-left text-sm font-semibold text-gray-300">Order</th>
@@ -26,6 +27,13 @@
                 @forelse($skills as $skill)
                 <tr class="hover:bg-white/5 transition-colors">
                     <td class="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-white">{{ $skill->category }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm">
+                        @if($skill->icon)
+                            <img src="{{ asset('storage/' . $skill->icon) }}" alt="{{ $skill->name }}" class="w-8 h-8 rounded">
+                        @else
+                            <span class="text-gray-500 text-xs">No icon</span>
+                        @endif
+                    </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ $skill->name }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-400">{{ $skill->proficiency_level ?? 'N/A' }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-400">{{ $skill->order }}</td>
@@ -40,7 +48,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-8 text-sm text-gray-500 text-center">No skills found.</td>
+                    <td colspan="6" class="px-6 py-8 text-sm text-gray-500 text-center">No skills found.</td>
                 </tr>
                 @endforelse
             </tbody>

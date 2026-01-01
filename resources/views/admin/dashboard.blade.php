@@ -4,6 +4,29 @@
 
 @section('content')
 <div class="space-y-6">
+    <!-- New Messages Alert -->
+    @if($unreadMessages > 0)
+        <div class="glass-card rounded-2xl p-4 border-l-4 border-blue-500">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-blue-300">
+                            You have {{ $unreadMessages }} new message{{ $unreadMessages > 1 ? 's' : '' }}
+                        </p>
+                    </div>
+                </div>
+                <a href="{{ route('admin.messages.index') }}" class="btn-gradient text-sm px-4 py-2">
+                    View Messages
+                </a>
+            </div>
+        </div>
+    @endif
+
     <!-- Welcome Section -->
     <div class="glass-card rounded-2xl p-6">
         <h2 class="text-xl font-bold text-white mb-2">Welcome to your Portfolio Admin</h2>

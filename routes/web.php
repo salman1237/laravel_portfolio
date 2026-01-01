@@ -5,6 +5,9 @@ use App\Http\Controllers\Admin\EducationController;
 use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\IndividualCompetitionController;
 use App\Http\Controllers\Admin\OnlineJudgeController;
+use App\Http\Controllers\Admin\PartnershipController;
+use App\Http\Controllers\Admin\SocialLinkController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\PersonalInfoController;
 use App\Http\Controllers\Admin\ProgrammingLanguageController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -14,6 +17,7 @@ use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\CertificationController;
 use App\Http\Controllers\Admin\AchievementController;
 use App\Http\Controllers\Admin\ResearchController;
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\CVController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
@@ -33,6 +37,7 @@ Route::get('/certifications', [PortfolioController::class, 'certifications'])->n
 Route::get('/languages', [PortfolioController::class, 'languages'])->name('languages');
 Route::get('/resume', [PortfolioController::class, 'resume'])->name('resume');
 Route::get('/cv/download', [CVController::class, 'download'])->name('cv.download');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
 // Breeze Dashboard - redirect to admin dashboard
 Route::get('/dashboard', function () {
@@ -63,6 +68,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('certifications', CertificationController::class)->except(['show']);
     Route::resource('achievements', AchievementController::class)->except(['show']);
     Route::resource('research', ResearchController::class)->except(['show']);
+    Route::resource('partnerships', PartnershipController::class)->except(['show']);
+    Route::patch('partnerships/{partnership}/toggle-status', [PartnershipController::class, 'toggleStatus'])->name('partnerships.toggle-status');
+    Route::resource('social-links', SocialLinkController::class)->except(['show']);
+    
+    // Messages
+    Route::get('messages', [AdminMessageController::class, 'index'])->name('messages.index');
+    Route::get('messages/{message}', [AdminMessageController::class, 'show'])->name('messages.show');
+    Route::post('messages/{message}/reply', [AdminMessageController::class, 'reply'])->name('messages.reply');
+    Route::patch('messages/{message}/toggle-read', [AdminMessageController::class, 'toggleRead'])->name('messages.toggle-read');
 });
 
 // Breeze Profile Routes
