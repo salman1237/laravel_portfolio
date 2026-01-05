@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2025 at 06:25 PM
+-- Generation Time: Jan 01, 2026 at 06:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,16 +70,6 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-admin@admin.com|127.0.0.1', 'i:1;', 1766400929),
-('laravel-cache-admin@admin.com|127.0.0.1:timer', 'i:1766400929;', 1766400929),
-('laravel-cache-admin@example.com|127.0.0.1', 'i:1;', 1766400881),
-('laravel-cache-admin@example.com|127.0.0.1:timer', 'i:1766400881;', 1766400881);
 
 -- --------------------------------------------------------
 
@@ -257,6 +247,35 @@ INSERT INTO `languages` (`id`, `name`, `proficiency`, `order`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sender_name` varchar(255) DEFAULT NULL,
+  `sender_email` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
+  `replied_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_name`, `sender_email`, `message`, `is_read`, `replied_at`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'test@example.com', 'This is a test message from the contact form.', 1, NULL, '2026-01-01 10:03:01', '2026-01-01 10:04:30'),
+(2, NULL, 'salman.zubair385@gmai.com', 'Test sms', 1, '2026-01-01 10:25:02', '2026-01-01 10:23:56', '2026-01-01 10:25:02'),
+(3, NULL, 'salman.zubair385@gmail.com', 'Test test', 1, '2026-01-01 10:27:46', '2026-01-01 10:27:13', '2026-01-01 10:27:46'),
+(4, NULL, 'salmanaahmed382.jubair@gmail.com', 'Hello', 1, '2026-01-01 11:38:44', '2026-01-01 11:38:21', '2026-01-01 11:38:44'),
+(5, NULL, 'salmanahmed382.jubair@gmail.com', 'Helloooo', 1, '2026-01-01 11:39:55', '2026-01-01 11:39:29', '2026-01-01 11:39:55'),
+(6, NULL, 'salmanahmed382.jubair@gmail.com', 'Hiiii', 1, '2026-01-01 11:44:04', '2026-01-01 11:43:40', '2026-01-01 11:44:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -288,7 +307,36 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2025_12_22_100822_create_achievements_table', 2),
 (16, '2025_12_22_100824_create_research_table', 2),
 (17, '2025_12_22_100826_add_new_fields_to_personal_infos_table', 2),
-(18, '2025_12_22_111354_drop_competitive_programming_tables', 3);
+(18, '2025_12_22_111354_drop_competitive_programming_tables', 3),
+(19, '2026_01_01_140133_add_icon_to_skills_table', 4),
+(20, '2026_01_01_144635_create_partnerships_table', 5),
+(21, '2026_01_01_152807_create_social_links_table', 6),
+(22, '2026_01_01_154948_create_messages_table', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partnerships`
+--
+
+CREATE TABLE `partnerships` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `partnerships`
+--
+
+INSERT INTO `partnerships` (`id`, `name`, `logo`, `url`, `order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Jahangirnagar University', 'partnerships/logos/MYova2NziuJFbwxFx9XT7AwvrvuXOZpacTnXTRT0.png', NULL, 1, 1, '2026-01-01 08:59:10', '2026-01-01 08:59:10'),
+(2, 'Campus 365', 'partnerships/logos/5FlnawDTM9ExTZY2St14H81B0Djx8QxSiB6tZ980.png', 'https://campus365.pro/', 2, 1, '2026-01-01 09:22:45', '2026-01-01 09:22:45');
 
 -- --------------------------------------------------------
 
@@ -434,9 +482,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('qwz3dNVcbYwGu9UJlO3M1DisVuoCwJbJoNzsZKl5', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ2F2Rk1EYlcxT3dMYjVWRXNJMHgySVBYRHBHcm52T1Y0a0lFemFJbiI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjk6Il9wcmV2aW91cyI7YToyOntzOjM6InVybCI7czo0NjoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL3BlcnNvbmFsLWluZm8vZWRpdCI7czo1OiJyb3V0ZSI7czoyNDoiYWRtaW4ucGVyc29uYWwtaW5mby5lZGl0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767027405),
-('suT4VBcbgXRXRZcNV19sq0Du7IaS90aM4djyhlxq', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMHNyZmRiSzVmc2JpcGI2ZTdMMk02M2wyN2FMeDY4a2NUWHdUUGNIRyI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjQyOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYWRtaW4vY2VydGlmaWNhdGlvbnMiO3M6NToicm91dGUiO3M6MjY6ImFkbWluLmNlcnRpZmljYXRpb25zLmluZGV4Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1767018113),
-('x3pgd5vaFdD6J7polxALBATpeL56RJegWb98LJfd', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNXhTWGo5MWE5Y3BTMGNyWXA2ZThsaDVXUTg2eUJlMFVybEhKS0pyUiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9lZHVjYXRpb24iO3M6NToicm91dGUiO3M6OToiZWR1Y2F0aW9uIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767028318);
+('7sIcdycGCZl8G4YQxiwQcGGTpG7KXz9iviT8egtl', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiRXRoRXpNdjdNT0xSTTNPc2JHUmFjQ2duZWtZczAwdDZYa0dDUnZOMSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9yZWdpc3RlciI7czo1OiJyb3V0ZSI7czo4OiJyZWdpc3RlciI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1767289782),
+('r1yx51OXQzekX0KoFtQ1hDX95n37prdaZq5AJFQ2', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidGlPaEFicTBFQ1lXRHpPbDZldk50WEVuNldJZEFxWDMwOERnOWxzciI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9tZXNzYWdlcy82IjtzOjU6InJvdXRlIjtzOjE5OiJhZG1pbi5tZXNzYWdlcy5zaG93Ijt9czozOiJ1cmwiO2E6MDp7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1767289445),
+('z8snM4vZbeqFrETOLtxyITe7Z4P2MlhdqK3zNXZx', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaWhiSElyZWpmRVp5T1IxREdxU2hUVmpSMXVwTU05WHZDRlp4ZmZEUyI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjk6Il9wcmV2aW91cyI7YToyOntzOjM6InVybCI7czozNzoiaHR0cDovL2xvY2FsaG9zdDo4MDAwL2FkbWluL2Rhc2hib2FyZCI7czo1OiJyb3V0ZSI7czoxNToiYWRtaW4uZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767289702);
 
 -- --------------------------------------------------------
 
@@ -448,6 +496,7 @@ CREATE TABLE `skills` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `category` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
   `proficiency_level` varchar(255) DEFAULT NULL,
   `order` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -458,35 +507,59 @@ CREATE TABLE `skills` (
 -- Dumping data for table `skills`
 --
 
-INSERT INTO `skills` (`id`, `category`, `name`, `proficiency_level`, `order`, `created_at`, `updated_at`) VALUES
-(1, 'Languages and Framework', 'Python', NULL, 1, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(2, 'Languages and Framework', 'Flutter', NULL, 2, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(3, 'Languages and Framework', 'Dart', NULL, 3, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(4, 'Languages and Framework', 'Laravel', NULL, 4, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(5, 'Languages and Framework', 'PHP', NULL, 5, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(6, 'Languages and Framework', 'Java', NULL, 6, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(7, 'Languages and Framework', 'MySQL', NULL, 7, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(8, 'Languages and Framework', 'C++', NULL, 8, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(9, 'Languages and Framework', 'C#', NULL, 9, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(10, 'Languages and Framework', 'JavaScript', NULL, 10, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(11, 'Software Development', 'Flutter Development', NULL, 11, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(12, 'Software Development', 'Android Development', NULL, 12, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(13, 'Software Development', 'Web Development', NULL, 13, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(14, 'Software Development', 'Embedded System', NULL, 14, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(15, 'Software Development', 'Machine Learning', NULL, 15, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(16, 'Software Development', 'AI Systems', NULL, 16, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(17, 'Software Development', 'Software Design', NULL, 17, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(18, 'Software Development', 'Database Design', NULL, 18, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(19, 'Project Management', 'Leadership', NULL, 19, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(20, 'Project Management', 'Communication', NULL, 20, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(21, 'Project Management', 'Collaboration', NULL, 21, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(22, 'Project Management', 'System Architecture', NULL, 22, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(23, 'Project Management', 'SDLC', NULL, 23, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(24, 'AI & ML', 'LLM', NULL, 24, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(25, 'AI & ML', 'NLP', NULL, 25, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(26, 'AI & ML', 'ML Algorithms', NULL, 26, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(27, 'AI & ML', 'Model Designing', NULL, 27, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
-(28, 'AI & ML', 'AI Product Design', NULL, 28, '2025-12-22 04:29:39', '2025-12-22 04:29:39');
+INSERT INTO `skills` (`id`, `category`, `name`, `icon`, `proficiency_level`, `order`, `created_at`, `updated_at`) VALUES
+(1, 'Languages and Framework', 'Python', NULL, NULL, 1, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(2, 'Languages and Framework', 'Flutter', NULL, NULL, 2, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(3, 'Languages and Framework', 'Dart', NULL, NULL, 3, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(4, 'Languages and Framework', 'Laravel', NULL, NULL, 4, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(5, 'Languages and Framework', 'PHP', NULL, NULL, 5, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(6, 'Languages and Framework', 'Java', NULL, NULL, 6, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(7, 'Languages and Framework', 'MySQL', NULL, NULL, 7, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(8, 'Languages and Framework', 'C++', NULL, NULL, 8, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(9, 'Languages and Framework', 'C#', NULL, NULL, 9, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(10, 'Languages and Framework', 'JavaScript', NULL, NULL, 10, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(11, 'Software Development', 'Flutter Development', NULL, NULL, 11, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(12, 'Software Development', 'Android Development', NULL, NULL, 12, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(13, 'Software Development', 'Web Development', NULL, NULL, 13, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(14, 'Software Development', 'Embedded System', NULL, NULL, 14, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(15, 'Software Development', 'Machine Learning', NULL, NULL, 15, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(16, 'Software Development', 'AI Systems', NULL, NULL, 16, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(17, 'Software Development', 'Software Design', NULL, NULL, 17, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(18, 'Software Development', 'Database Design', NULL, NULL, 18, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(19, 'Project Management', 'Leadership', NULL, NULL, 19, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(20, 'Project Management', 'Communication', NULL, NULL, 20, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(21, 'Project Management', 'Collaboration', NULL, NULL, 21, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(22, 'Project Management', 'System Architecture', NULL, NULL, 22, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(23, 'Project Management', 'SDLC', NULL, NULL, 23, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(24, 'AI & ML', 'LLM', NULL, NULL, 24, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(25, 'AI & ML', 'NLP', NULL, NULL, 25, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(26, 'AI & ML', 'ML Algorithms', NULL, NULL, 26, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(27, 'AI & ML', 'Model Designing', NULL, NULL, 27, '2025-12-22 04:29:39', '2025-12-22 04:29:39'),
+(28, 'AI & ML', 'AI Product Design', NULL, NULL, 28, '2025-12-22 04:29:39', '2025-12-22 04:29:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `social_links`
+--
+
+CREATE TABLE `social_links` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `display_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `social_links`
+--
+
+INSERT INTO `social_links` (`id`, `name`, `icon`, `url`, `display_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Linkdin', 'social_icons/RjJV7ZDMZ8Egx0Tguar122UMI66009YmIj5d3e34.png', 'https://www.linkedin.com/in/k-m-abir-mahmud/', 1, 1, '2026-01-01 09:38:02', '2026-01-01 09:38:02');
 
 -- --------------------------------------------------------
 
@@ -511,7 +584,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin User', 'admin@portfolio.com', NULL, '$2y$12$Sj2KBhrTPM9m3wJI11JOUesG0CsRnMESUMhl32cpGX8CdFjJtqH0m', '5EZJybp8erf06OZVnLFSz50KRouLFqNL7qwX82QL6Jfha9pvyArZkv92vgSl', '2025-11-29 10:54:04', '2025-11-29 10:54:04'),
-(2, 'Admin', 'admin@example.com', NULL, '$2y$12$/H5VvmTap27m2OsneCIsauP8icL6UIcj44MafOVvOjWzLKbFHSkMi', NULL, '2025-12-22 04:55:58', '2025-12-22 04:55:58');
+(2, 'Admin', 'admin@example.com', NULL, '$2y$12$/H5VvmTap27m2OsneCIsauP8icL6UIcj44MafOVvOjWzLKbFHSkMi', NULL, '2025-12-22 04:55:58', '2025-12-22 04:55:58'),
+(3, 'Admin User', 'admin@test.com', NULL, '$2y$12$auIk2kJto3yGFHM1GeaRT.zcsLOP4FGXaA2BJ24d4LsHOCLri/gVa', NULL, '2026-01-01 08:06:08', '2026-01-01 08:06:08');
 
 --
 -- Indexes for dumped tables
@@ -580,9 +654,23 @@ ALTER TABLE `languages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `messages_is_read_index` (`is_read`),
+  ADD KEY `messages_created_at_index` (`created_at`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `partnerships`
+--
+ALTER TABLE `partnerships`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -628,6 +716,14 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `skills`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `social_links`
+--
+ALTER TABLE `social_links`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `social_links_display_order_index` (`display_order`),
+  ADD KEY `social_links_is_active_index` (`is_active`);
 
 --
 -- Indexes for table `users`
@@ -683,10 +779,22 @@ ALTER TABLE `languages`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `partnerships`
+--
+ALTER TABLE `partnerships`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_infos`
@@ -719,10 +827,16 @@ ALTER TABLE `skills`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
+-- AUTO_INCREMENT for table `social_links`
+--
+ALTER TABLE `social_links`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
