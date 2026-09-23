@@ -53,7 +53,18 @@ Route::get('/sitemap.xml', function () {
         ['name' => 'languages', 'changefreq' => 'yearly', 'priority' => '0.5'],
     ];
 
-    return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'text/xml');
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+    foreach ($urls as $entry) {
+        $xml .= '  <url>' . "\n";
+        $xml .= '    <loc>' . e(route($entry['name'])) . '</loc>' . "\n";
+        $xml .= '    <changefreq>' . $entry['changefreq'] . '</changefreq>' . "\n";
+        $xml .= '    <priority>' . $entry['priority'] . '</priority>' . "\n";
+        $xml .= '  </url>' . "\n";
+    }
+    $xml .= '</urlset>';
+
+    return response($xml, 200)->header('Content-Type', 'text/xml');
 })->name('sitemap');
 
 // Breeze Dashboard - redirect to admin dashboard

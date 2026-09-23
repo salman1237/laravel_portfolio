@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Home')
-@section('meta_description', 'K. M. Abir Mahmud's professional portfolio — entrepreneur, developer, and problem solver. Explore my skills, projects, and experience.')
+@section('meta_description', "K. M. Abir Mahmud's professional portfolio — entrepreneur, developer, and problem solver. Explore my skills, projects, and experience.")
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
