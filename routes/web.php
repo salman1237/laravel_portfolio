@@ -39,6 +39,23 @@ Route::get('/resume', [PortfolioController::class, 'resume'])->name('resume');
 Route::get('/cv/download', [CVController::class, 'download'])->name('cv.download');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        ['name' => 'home', 'changefreq' => 'monthly', 'priority' => '1.0'],
+        ['name' => 'resume', 'changefreq' => 'monthly', 'priority' => '0.9'],
+        ['name' => 'skills', 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['name' => 'projects', 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['name' => 'experience', 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['name' => 'education', 'changefreq' => 'yearly', 'priority' => '0.7'],
+        ['name' => 'achievements', 'changefreq' => 'monthly', 'priority' => '0.7'],
+        ['name' => 'research', 'changefreq' => 'monthly', 'priority' => '0.6'],
+        ['name' => 'certifications', 'changefreq' => 'monthly', 'priority' => '0.6'],
+        ['name' => 'languages', 'changefreq' => 'yearly', 'priority' => '0.5'],
+    ];
+
+    return response()->view('sitemap', ['urls' => $urls])->header('Content-Type', 'text/xml');
+})->name('sitemap');
+
 // Breeze Dashboard - redirect to admin dashboard
 Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');

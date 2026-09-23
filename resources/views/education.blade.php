@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Education')
+@section('meta_description', 'Academic background and educational qualifications of K. M. Abir Mahmud.')
 
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

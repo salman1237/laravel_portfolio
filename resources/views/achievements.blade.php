@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Achievements')
+@section('meta_description', 'Awards, honors, and notable achievements earned by K. M. Abir Mahmud.')
 
 @section('content')
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

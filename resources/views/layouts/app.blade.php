@@ -5,7 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Portfolio') - {{ $personalInfo->name ?? 'My Portfolio' }}</title>
+    @php
+        $seoName = $personalInfo->name ?? 'K. M. Abir Mahmud';
+        $seoDescription = trim($__env->yieldContent('meta_description')) ?: ($personalInfo->bio ?? "{$seoName}'s professional portfolio — entrepreneur, developer, and problem solver.");
+        $seoTitle = trim($__env->yieldContent('title')) ?: 'Portfolio';
+        $seoImage = ($personalInfo->photo ?? null) ? asset('storage/' . $personalInfo->photo) : asset('favicon.svg');
+    @endphp
+
+    <title>{{ $seoTitle }} - {{ $seoName }}</title>
+    <meta name="description" content="{{ Str::limit(strip_tags($seoDescription), 160) }}">
+    <meta name="author" content="{{ $seoName }}">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="{{ request()->routeIs('home') ? 'profile' : 'website' }}">
+    <meta property="og:site_name" content="{{ $seoName }}">
+    <meta property="og:title" content="{{ $seoTitle }} - {{ $seoName }}">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($seoDescription), 200) }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }} - {{ $seoName }}">
+    <meta name="twitter:description" content="{{ Str::limit(strip_tags($seoDescription), 200) }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+
+    @if($personalInfo)
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'Person',
+        'name' => $personalInfo->name,
+        'jobTitle' => $personalInfo->title ?? null,
+        'description' => $personalInfo->bio ?? null,
+        'email' => $personalInfo->email ?? null,
+        'image' => $seoImage,
+        'url' => route('home'),
+        'sameAs' => array_values(array_filter([
+            $personalInfo->linkedin ?? null,
+            $personalInfo->github ?? null,
+            $personalInfo->website ?? null,
+        ])),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    </script>
+    @endif
 
     <!-- Google Fonts - Space Grotesk & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +72,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl sm:text-2xl font-bold gradient-text">{{ $personalInfo->name ?? 'Portfolio' }}</h1>
+                        <a href="{{ route('home') }}" class="text-xl sm:text-2xl font-bold gradient-text">{{ $personalInfo->name ?? 'Portfolio' }}</a>
                     </div>
                     <!-- Desktop Navigation -->
                     <div class="hidden lg:ml-10 lg:flex lg:space-x-4">

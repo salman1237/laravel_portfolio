@@ -21,8 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Share personalInfo with all views that use the main layout
-        View::composer('layouts.app', function ($view) {
+        // Share personalInfo with the layout and every public page (needed for per-page SEO meta tags)
+        View::composer([
+            'layouts.app', 'home', 'skills', 'projects', 'experience', 'education',
+            'achievements', 'research', 'certifications', 'languages', 'resume',
+        ], function ($view) {
             $personalInfo = PersonalInfo::first();
             $view->with('personalInfo', $personalInfo);
         });

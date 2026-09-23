@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Certifications')
+@section('meta_description', 'Professional certifications and credentials earned by K. M. Abir Mahmud.')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

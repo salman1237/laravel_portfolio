@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Projects')
+@section('meta_description', 'A showcase of software and web development projects built by K. M. Abir Mahmud.')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
