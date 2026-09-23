@@ -6,10 +6,39 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @php
+        // @section('x', 'value') (inline form) auto-escapes its value via e() when stored,
+        // so yieldContent() returns HTML-escaped text here — decode it back to raw text
+        // before re-escaping once at output time, or apostrophes etc. get double-encoded.
+        $rawMeta = html_entity_decode($__env->yieldContent('meta_description'), ENT_QUOTES);
+        $rawTitle = html_entity_decode($__env->yieldContent('title'), ENT_QUOTES);
+
         $seoName = $personalInfo->name ?? 'K. M. Abir Mahmud';
-        $seoDescription = trim($__env->yieldContent('meta_description')) ?: ($personalInfo->bio ?? "{$seoName}'s professional portfolio — entrepreneur, developer, and problem solver.");
-        $seoTitle = trim($__env->yieldContent('title')) ?: 'Portfolio';
+        $seoDescription = trim($rawMeta) ?: ($personalInfo->bio ?? "{$seoName}'s professional portfolio — entrepreneur, developer, and problem solver.");
+        $seoTitle = trim($rawTitle) ?: 'Portfolio';
         $seoImage = ($personalInfo->photo ?? null) ? asset('storage/' . $personalInfo->photo) : asset('favicon.svg');
+
+        $personLd = null;
+        if ($personalInfo) {
+            $website = $personalInfo->website ?? null;
+            if ($website && !preg_match('#^https?://#i', $website)) {
+                $website = 'https://' . $website;
+            }
+            $personLd = json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'Person',
+                'name' => $personalInfo->name,
+                'jobTitle' => $personalInfo->tagline ?? 'Entrepreneur',
+                'description' => $personalInfo->bio ?? null,
+                'email' => $personalInfo->email ?? null,
+                'image' => $seoImage,
+                'url' => route('home'),
+                'sameAs' => array_values(array_filter([
+                    $personalInfo->linkedin ?? null,
+                    $personalInfo->github ?? null,
+                    $website,
+                ])),
+            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        }
     @endphp
 
     <title>{{ $seoTitle }} - {{ $seoName }}</title>
@@ -35,23 +64,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
 
-    @if($personalInfo)
+    @if($personLd)
     <script type="application/ld+json">
-    {!! json_encode([
-        '@context' => 'https://schema.org',
-        '@type' => 'Person',
-        'name' => $personalInfo->name,
-        'jobTitle' => $personalInfo->title ?? null,
-        'description' => $personalInfo->bio ?? null,
-        'email' => $personalInfo->email ?? null,
-        'image' => $seoImage,
-        'url' => route('home'),
-        'sameAs' => array_values(array_filter([
-            $personalInfo->linkedin ?? null,
-            $personalInfo->github ?? null,
-            $personalInfo->website ?? null,
-        ])),
-    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+    {!! $personLd !!}
     </script>
     @endif
 
